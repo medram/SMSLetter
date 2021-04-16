@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     'accounts',
     'extra_settings',
+    'settings'
 ]
 
 MIDDLEWARE = [
