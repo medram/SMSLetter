@@ -24,8 +24,8 @@ class CustomGroupAdmin(GroupAdmin):
 class CustomUserAdmin(UserAdmin):
     #add_form = UserCreationForm
 
-    list_display = ('profile', 'email', 'full_name', 'get_gender',
-                    'is_active', 'is_staff', 'date_joined')
+    list_display = ('profile', 'email', 'full_name', 'get_gender', 'phone',
+                    'is_active', 'is_staff', 'is_superuser', 'date_joined')
     list_display_links = ('email', 'full_name')
     # list_editable = ('is_active',)
     readonly_fields = ('get_profile', 'last_login',

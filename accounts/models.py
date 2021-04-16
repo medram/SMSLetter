@@ -10,6 +10,8 @@ from django.conf import settings
 from django.utils import timezone
 from django.core.mail import send_mail
 
+from . import validators
+
 
 def _user_profile_path(instance, filename):
     return f"profiles/{secrets.token_hex(16)}.png"
@@ -91,7 +93,8 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
         _('Last name'), max_length=32, null=True, blank=True)
 
     gender = models.IntegerField(choices=GENDER.choices, default=GENDER.MALE)
-    phone = models.CharField(max_length=10, blank=True, null=True)
+    phone = models.CharField(max_length=10, blank=True,
+                             null=True, validators=[validators.moroccan_phone])
 
     # status = models.IntegerField(choices=Status.choices, default=Status.APPROVED)
     address = models.CharField(max_length=256, null=True, blank=True)

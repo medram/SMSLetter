@@ -1,4 +1,12 @@
 /venv
 /static
+__pycache__/
+media/*
+!media/profiles/default.jpg
+
+*.log
+*.pot
+*.pyc
+
 
 db.sqlite3
