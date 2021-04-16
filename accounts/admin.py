@@ -31,7 +31,7 @@ class CustomUserAdmin(UserAdmin):
     readonly_fields = ('get_profile', 'last_login',
                        'date_joined', 'updated', 'get_password')
     search_fields = ('first_name', 'last_name', 'email', 'phone')
-    list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups', 'gender')
+    list_filter = ('date_joined', 'is_staff', 'is_superuser', 'is_active', 'groups', 'gender')
     ordering = ('-date_joined',)
     # autocomplete_fields = ('',)
 
@@ -53,7 +53,7 @@ class CustomUserAdmin(UserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('username', 'email', 'password1', 'password2')
+            'fields': ('username', 'email', 'phone', 'password1', 'password2')
         }),
     )
 
