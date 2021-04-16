@@ -1,0 +1,35 @@
+{% load i18n %}
+{% load extra_settings %}
+{% load pages_tags %}
+<footer class="bg-dark text-white pt-2 pb-5">
+	<div class="row mb-3">
+		<div class="col-md-12">
+			<ul class="nav text-center">
+				{% footer_menu %}
+			</ul>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			{% now 'Y' as YEAR %}
+			{% get_setting "APP_NAME" as APP_NAME %}
+			{% blocktrans trimmed with year=YEAR app_name=APP_NAME %}
+				&copy; {{year}} All right reserved for {{app_name}}.
+			{% endblocktrans %}
+			<form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+			    <input name="next" type="hidden" value="{{ redirect_to }}">
+			    <select name="language">
+			        {% get_current_language as LANGUAGE_CODE %}
+			        {% get_available_languages as LANGUAGES %}
+			        {% get_language_info_list for LANGUAGES as languages %}
+			        {% for language in languages %}
+			            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+			                {{ language.name_local }} ({{ language.code }})
+			            </option>
+			        {% endfor %}
+			    </select>
+			    <input type="submit" value="Go">
+			</form>
+		</div>
+	</div>
+</footer>

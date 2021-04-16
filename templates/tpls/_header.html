@@ -1,0 +1,46 @@
+{% load i18n %}
+{% load pages_tags %}
+{% load extra_settings %}
+<header>
+  <div id="header-box">
+    <div class="container">
+      <div id="brand-logo">
+        <a class="navbar-brand" href="{% url 'daira:home' %}">
+          {% get_setting 'SITE_BRAND' as SITE_BRAND %}
+          {% if SITE_BRAND != '' %}
+            <img src="/media/{{ SITE_BRAND }}" width="100px" height="100px" class="ml-2 mr-2">
+          {% endif %}
+        </a>
+        <span>وزارة الداخلية<br>ولاية جهة فاس مكناس<br>عمالة فاس</span>
+      </div>
+
+      <div id="brand-name" class="pt-2">
+        <a href="{% url 'daira:home' %}">
+          {% get_setting "APP_NAME" default="Logo" %}
+        </a><br>
+        <span>منصة لطلب الشواهد الادارية عن بعد.</span>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success sticky-top">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          {% main_menu %}
+
+<!--           <li class="nav-item {% if 'home' in request.path  %} active {% endif %}">
+            <a class="nav-link" href="{% url 'daira:home' %}">About</a>
+          </li> -->
+        </ul>
+        <div class="ml-auto my-2 my-lg-0">
+          <ul class="navbar-nav">
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </nav>
+</header>

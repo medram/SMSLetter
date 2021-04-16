@@ -1,0 +1,26 @@
+{% extends 'tpls/_base.html' %}
+{% block content %}
+	<div class="pageheader">
+		<div class="container text-center">
+			<h1>{{ page.title|title }}</h1>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				{% block page_content %}
+				{% endblock %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block append_head %}
+	{% if page.seo_keywords %}
+		<meta name="keywords" content="{{ page.seo_keywords }}">
+	{% endif %}
+
+	{% if page.seo_description %}
+		<meta name="description" content="{{ page.seo_description }}">
+	{% endif %}
+{% endblock %}
