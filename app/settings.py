@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 
     'accounts',
     'extra_settings',
-    'settings'
+    'settings',
+    'sms',
 ]
 
 MIDDLEWARE = [

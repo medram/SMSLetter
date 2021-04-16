@@ -94,7 +94,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
 
     gender = models.IntegerField(choices=GENDER.choices, default=GENDER.MALE)
     phone = models.CharField(max_length=10,
-                             help_text=_('e.g. 0655555555'),
+                             help_text=_('e.g. 06xxxxxxxx'),
                              validators=[validators.moroccan_phone])
 
     # status = models.IntegerField(choices=Status.choices, default=Status.APPROVED)
