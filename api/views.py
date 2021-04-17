@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework import generics, permissions
+from rest_framework import permissions, mixins, viewsets
 from sms.models import Contact
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -7,13 +7,15 @@ from rest_framework.response import Response
 
 from .serializers import ContactSerializer, UserSerializer
 
-# class UserDetail(generics.ListAPIView):
-#     serializer_class = UserSerializer
-#     permission_classes = [permissions.IsAuthenticated]
 
-#     def get_queryset(self):
-#     	#return just the current/logged in user.
-#         return [self.request.user]
+class ContactViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Contact.objects.filter(user=self.request.user)
+
 
 class CustomAuthToken(ObtainAuthToken):
 
@@ -29,19 +31,3 @@ class CustomAuthToken(ObtainAuthToken):
         result.update(user_serialiser.data)
 
         return Response(result)
-
-
-class ContactList(generics.ListCreateAPIView):
-    serializer_class = ContactSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return Contact.objects.filter(user=self.request.user)
-
-
-class ContactDetail(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = ContactSerializer
-    permission_classes = [permissions.IsAuthenticated]
-
-    def get_queryset(self):
-        return Contact.objects.filter(user=self.request.user)
