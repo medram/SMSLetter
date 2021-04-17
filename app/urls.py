@@ -7,6 +7,7 @@ app_name = __package__
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include('api.urls'))
 ]
 
 # appending static and media files
