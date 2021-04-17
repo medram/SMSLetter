@@ -1,10 +1,12 @@
 from django.shortcuts import render
+from django.contrib.auth import get_user_model
+
 from rest_framework import permissions, mixins, viewsets
-from sms.models import Contact
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
+from sms.models import Contact
 from .serializers import ContactSerializer, UserSerializer
 
 
@@ -17,17 +19,29 @@ class ContactViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.Ge
         return Contact.objects.filter(user=self.request.user)
 
 
-class CustomAuthToken(ObtainAuthToken):
+class ProfileViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data,
-                                           context={'request': request})
-        serializer.is_valid(raise_exception=True)
+    def get_queryset(self):
+        return self.request.user
 
-        user = serializer.validated_data['user']
-        user_serialiser = UserSerializer(user)
-        token, created = Token.objects.get_or_create(user=user)
-        result = {'token': token.key}
-        result.update(user_serialiser.data)
+    def list(self, request, pk=None):
+        return Response(self.get_serializer(request.user).data)
 
-        return Response(result)
+
+# class CustomAuthToken(ObtainAuthToken):
+
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data,
+#                                            context={'request': request})
+#         serializer.is_valid(raise_exception=True)
+
+#         user = serializer.validated_data['user']
+#         user_serialiser = UserSerializer(user)
+#         token, created = Token.objects.get_or_create(user=user)
+#         result = {'token': token.key}
+#         result.update(user_serialiser.data)
+
+#         return Response(result)
