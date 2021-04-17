@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.core.validators import integer_validator
+from accounts.validators import moroccan_phone
 
 
 class Contact(models.Model):
@@ -10,7 +11,7 @@ class Contact(models.Model):
     phone = models.CharField(
         _('Phone number'),
         max_length=10,
-        validators=[integer_validator],
+        validators=[integer_validator, moroccan_phone],
         help_text=_('e.g. 06xxxxxxxx'))
 
     created = models.DateTimeField(auto_now_add=True)
@@ -21,7 +22,8 @@ class Contact(models.Model):
 
 
 class SMS(models.Model):
-    message = models.TextField(_('Message'), max_length=160, help_text=_('maximum characters: 160'))
+    message = models.TextField(
+        _('Message'), max_length=160, help_text=_('maximum characters: 160'))
     user = models.ForeignKey(
         get_user_model(), related_name='sms_list', on_delete=models.CASCADE)
 

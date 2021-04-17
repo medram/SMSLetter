@@ -5,6 +5,7 @@ from PIL import Image
 from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import User, Group, BaseUserManager, PermissionsMixin
+from django.core.validators import integer_validator
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.utils import timezone
@@ -95,7 +96,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     gender = models.IntegerField(choices=GENDER.choices, default=GENDER.MALE)
     phone = models.CharField(max_length=10,
                              help_text=_('e.g. 06xxxxxxxx'),
-                             validators=[validators.moroccan_phone])
+                             validators=[integer_validator, validators.moroccan_phone])
 
     # status = models.IntegerField(choices=Status.choices, default=Status.APPROVED)
     address = models.CharField(max_length=256, null=True, blank=True)

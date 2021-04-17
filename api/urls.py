@@ -9,12 +9,14 @@ from . import views
 
 app_name = __package__
 
+
 router = routers.SimpleRouter(trailing_slash=True)
 router.register(r'contact', views.ContactViewSet)
 
 urlpatterns = [
     path('auth/login/', views.CustomAuthToken.as_view()),
     path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
 
 

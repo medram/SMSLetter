@@ -5,6 +5,7 @@ from sms.models import Contact
 
 
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = get_user_model()
         fields = ('id', 'username', 'email',
@@ -13,6 +14,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ContactSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        user = self.context.get('request').user
+        contact = Contact.objects.create(**validated_data)
+        contact.user.add(user)
+        return contact
+
     class Meta:
         model = Contact
         fields = ('id', 'name', 'phone', 'created')
