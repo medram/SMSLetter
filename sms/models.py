@@ -29,7 +29,7 @@ class SMS(models.Model):
 
     class Meta:
         verbose_name = 'SMS'
-        verbose_name_plural = 'SMS Lists'
+        verbose_name_plural = 'SMS List'
 
     def __str__(self):
         return self.message
