@@ -14,7 +14,7 @@ class ContactsAdmin(admin.ModelAdmin):
 
 @admin.register(SMS)
 class SMSAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'alias', 'message', 'created')
+    list_display = ('id', 'title', 'alias', 'message', 'user', 'created')
     list_display_links = ('id', 'message', 'title', 'alias')
     search_fields = ('message',)
     list_filter = ('created', 'user')
