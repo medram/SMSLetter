@@ -15,15 +15,23 @@ class Contact(models.Model):
         help_text=_('e.g. 06xxxxxxxx'))
 
     created = models.DateTimeField(auto_now_add=True)
-    user = models.ManyToManyField(get_user_model(), related_name='contacts')
+    #user = models.ManyToManyField(get_user_model(), related_name='contacts')
+    user = models.ForeignKey(
+        get_user_model(), related_name='contacts', on_delete=models.CASCADE)
 
     def __str__(self):
         return self.phone
 
 
 class SMS(models.Model):
+    title = models.CharField(_('Title'), max_length=32, null=True, blank=True)
+    alias = models.CharField(_('Alias'), max_length=11, null=True,
+                             blank=True, help_text=_('alpha-numériques (a-z,A-Z,0-9)'))
+    attachement = models.CharField(
+        _('Attachement (URL)'), max_length=100, null=True, blank=True)
+
     message = models.TextField(
-        _('Message'), max_length=160, help_text=_('maximum characters: 160'))
+        _('Message'), max_length=450, help_text=_('maximum characters: 459'))
     user = models.ForeignKey(
         get_user_model(), related_name='sms_list', on_delete=models.CASCADE)
 
@@ -34,4 +42,4 @@ class SMS(models.Model):
         verbose_name_plural = 'SMS List'
 
     def __str__(self):
-        return self.message
+        return f'Message id: #{self.id}'
