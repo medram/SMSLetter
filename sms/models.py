@@ -19,6 +19,9 @@ class Contact(models.Model):
     user = models.ForeignKey(
         get_user_model(), related_name='contacts', on_delete=models.CASCADE)
 
+    send_sms = models.BooleanField(
+        _('Send SMS messages now'), default=False, null=True, blank=True)
+
     def __str__(self):
         return self.phone
 

@@ -9,7 +9,8 @@ from .models import Contact
 
 @receiver(post_save, sender=Contact)
 def send_sms(sender, instance=None, created=False, **kwargs):
-    if created:
+    if created and instance.send_sms:
+
         URL = r'https://bulksms.ma/developer/sms/send'
         user = instance.user
         messages = user.sms_list.all()  # get just the first message.
@@ -24,7 +25,7 @@ def send_sms(sender, instance=None, created=False, **kwargs):
                 'message': message.message,
                 'attachement': message.attachement,
             }
-            # print(params)
+            #print(params)
             try:
                 req = requests.get(URL, params=params)
 

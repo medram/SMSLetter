@@ -17,10 +17,11 @@ class ContactSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = self.context.get('request').user
+        validated_data['user'] = user
         contact = Contact.objects.create(**validated_data)
-        contact.user.add(user)
+        #contact.user.add(user)
         return contact
 
     class Meta:
         model = Contact
-        fields = ('id', 'name', 'phone', 'created')
+        fields = ('id', 'name', 'phone', 'send_sms', 'created')
