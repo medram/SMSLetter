@@ -1,0 +1,68 @@
+[
+{
+  "model": "extra_settings.setting",
+  "pk": 1,
+  "fields": {
+    "name": "SITE_NAME",
+    "value_type": "string",
+    "value_bool": false,
+    "value_date": null,
+    "value_datetime": null,
+    "value_decimal": "0E-10",
+    "value_duration": null,
+    "value_email": "",
+    "value_file": "",
+    "value_float": 0.0,
+    "value_image": "",
+    "value_int": 0,
+    "value_string": "SMSLetter",
+    "value_text": "",
+    "value_time": null,
+    "value_url": ""
+  }
+},
+{
+  "model": "extra_settings.setting",
+  "pk": 2,
+  "fields": {
+    "name": "SITE_LOGO",
+    "value_type": "image",
+    "value_bool": false,
+    "value_date": null,
+    "value_datetime": null,
+    "value_decimal": "0E-10",
+    "value_duration": null,
+    "value_email": "",
+    "value_file": "",
+    "value_float": 0.0,
+    "value_image": "",
+    "value_int": 0,
+    "value_string": "",
+    "value_text": "",
+    "value_time": null,
+    "value_url": ""
+  }
+},
+{
+  "model": "extra_settings.setting",
+  "pk": 3,
+  "fields": {
+    "name": "BULKSMS_TOKEN",
+    "value_type": "string",
+    "value_bool": false,
+    "value_date": null,
+    "value_datetime": null,
+    "value_decimal": "0E-10",
+    "value_duration": null,
+    "value_email": "",
+    "value_file": "",
+    "value_float": 0.0,
+    "value_image": "",
+    "value_int": 0,
+    "value_string": "",
+    "value_text": "",
+    "value_time": null,
+    "value_url": ""
+  }
+}
+]
