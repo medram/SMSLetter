@@ -1,8 +1,13 @@
-from django.db import models
+from django.db import models, transaction
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.core.validators import integer_validator
 from accounts.validators import moroccan_phone
+from django_currentuser.db.models import CurrentUserField
+
+from . import common
+
+User = get_user_model()
 
 
 class Contact(models.Model):
@@ -46,3 +51,43 @@ class SMS(models.Model):
 
     def __str__(self):
         return f'Message id: #{self.id}'
+
+
+def get_temp_path(instance, filename):
+    return f'tmp/tmp_{filename}'
+
+
+class ContactList(models.Model):
+    list_name = models.CharField(max_length=32, unique=True)
+    file = models.FileField(
+        _('CSV file'), upload_to=get_temp_path, null=True, blank=True, help_text=_('Upload Contacts from a CSV file'))
+    users = models.ManyToManyField(
+        User, related_name='contact_lists', blank=True, verbose_name=_('Select from Users Contacts'))
+
+    contacts = models.ManyToManyField(
+        'Contact', related_name='contact_lists', blank=True, verbose_name=_('Select more Contacts'))
+
+    updated_by = CurrentUserField(related_name='updated_by', on_update=True)
+    created_by = CurrentUserField(related_name='created_by')
+
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Contact List'
+        verbose_name_plural = 'Contact Lists'
+        ordering = ('-created',)
+
+    def __str__(self):
+        return f'{self.list_name} ({self.contacts.count()})'
+
+    def save(self, *args, **kwargs):
+        # need to create contacts and asign it to this list.
+        if self.is_created:
+            transaction.on_commit(
+                lambda: common.generate_contact_list(self))
+
+        super().save(*args, **kwargs)
+
+    @property
+    def is_created(self):
+        return False if self.pk else True

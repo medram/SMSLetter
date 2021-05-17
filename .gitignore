@@ -2,7 +2,9 @@
 /static
 __pycache__/
 media/*
+tmp/*
 !media/profiles/default.jpg
+!tmp/.gitempty
 
 *.log
 *.pot
