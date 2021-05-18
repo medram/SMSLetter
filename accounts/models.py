@@ -10,6 +10,9 @@ from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.utils import timezone
 from django.core.mail import send_mail
+from django.contrib import admin
+from django.utils.html import format_html, mark_safe
+from django.urls import reverse
 
 from . import validators
 
@@ -115,6 +118,30 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
     #     super().clean()
     #     self.email = self.__class__.objects.normalize_email(self.email)
 
+    @admin.display(description=_('Profile'))
+    def profile(self, size=50, info=''):
+        return format_html(
+            f"""<a href=\"{reverse('admin:accounts_myuser_change', args=(self.pk,))}\">
+                <img src='{self.profile_image.url}' width='{size}' height='{size}' style='border-radius: 50%; border: 1px solid #CCC;'> {info}
+            </a>"""
+        )
+
+    @admin.display(description=_('User'))
+    def profile_with_info(self, size=50):
+        return self.profile(size, self.__str__())
+
+    @admin.display(description=_('User'))
+    def profile_small(self):
+        return self.profile(32)
+
+    @admin.display(description=_('User'))
+    def profile_small_with_info(self):
+        return self.profile_with_info(32)
+
+    @admin.display(description=_('Avatar'))
+    def profile_large(self):
+        return self.profile(200)
+
     def get_full_name(self):
         if self.first_name and self.last_name:
             return f'{self.first_name} {self.last_name}'
@@ -178,7 +205,7 @@ class MyUser(AbstractBaseUser, PermissionsMixin):
             pass
 
     def __str__(self):
-        return self.email
+        return f'{self.username} ({self.email})'
 
 
 class MyGroup(Group):

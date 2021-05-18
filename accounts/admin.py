@@ -28,16 +28,17 @@ class CustomUserAdmin(UserAdmin):
                     'is_active', 'is_staff', 'is_superuser', 'date_joined')
     list_display_links = ('email', 'full_name')
     # list_editable = ('is_active',)
-    readonly_fields = ('get_profile', 'last_login',
+    readonly_fields = ('profile_large', 'last_login',
                        'date_joined', 'updated', 'get_password')
     search_fields = ('first_name', 'last_name', 'email', 'phone')
-    list_filter = ('date_joined', 'is_staff', 'is_superuser', 'is_active', 'groups', 'gender')
+    list_filter = ('date_joined', 'is_staff', 'is_superuser',
+                   'is_active', 'groups', 'gender')
     ordering = ('-date_joined',)
     # autocomplete_fields = ('',)
 
     fieldsets = (
         (None, {
-            'fields': ('get_profile', 'profile_image')
+            'fields': ('profile_large', 'profile_image')
         }),
         (_('Personal info'), {
             'fields': ('username', 'email', 'get_password', 'first_name', 'last_name', 'gender', 'phone', 'address')
@@ -64,17 +65,6 @@ class CustomUserAdmin(UserAdmin):
     # def get_fieldsets(self, request, obj=None):
     #     # fieldsets = super().get_fieldsets(request, obj)
     #     return fieldsets
-
-    def profile(self, obj):
-        return format_html(
-            f"<a href=\"{reverse('admin:accounts_myuser_change', args=(obj.pk,))}\"><img src='{obj.profile_image.url}' width='50' height='50' style='border-radius: 50%; border: 1px solid #CCC;'></a>"
-        )
-
-    def get_profile(self, obj):
-        return format_html(
-            f"<a href=\"{reverse('admin:accounts_myuser_change', args=(obj.pk,))}\"><img src='{obj.profile_image.url}' style='border-radius: 50%; border: 1px solid #CCC; width: 200px; height: 200px;'></a>"
-        )
-    get_profile.short_description = _('Avatar')
 
     def full_name(self, obj):
         full_name = obj.get_full_name()
