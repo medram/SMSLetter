@@ -73,8 +73,8 @@ class ContactList(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'Contact List'
-        verbose_name_plural = 'Contact Lists'
+        verbose_name = 'List'
+        verbose_name_plural = 'Lists'
         ordering = ('-created',)
 
     def __str__(self):
