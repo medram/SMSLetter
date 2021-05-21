@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
 from background_task.models import Task, CompletedTask
+from django.utils.html import mark_safe
 
 from .models import Campaign
 
@@ -17,13 +18,13 @@ class CampaignAdmin(admin.ModelAdmin):
         (_('Access Info'), {
          'fields': ('created_by_profile_large', 'created', 'updated')})
     )
-    list_display = ('id', 'title', 'total_messages', 'total_contacts',
+    list_display = ('id', 'title', 'total_messages', 'total_contacts', 'get_status',
                     'created_by_profile', 'created')
     list_display_links = ('id', 'title')
     filter_horizontal = ('contact_lists', 'messages')
     readonly_fields = ('updated', 'created', 'updated_by',
                        'created_by', 'updated_by_profile', 'created_by_profile', 'created_by_profile_large')
-    list_filter = ('created', 'created_by')
+    list_filter = ('created', 'status', 'created_by')
     search_fields = ('id', 'title')
     date_hierarchy = 'created'
     radio_fields = {'repeat': admin.VERTICAL}
@@ -33,3 +34,14 @@ class CampaignAdmin(admin.ModelAdmin):
 
     def total_contacts(self, obj=None):
         return sum([l.contacts.count() for l in obj.contact_lists.all()])
+
+    def get_status(self, obj=None):
+        css_class = ''
+        if obj.status == obj.Status.READY:
+            css_class = 'badge-secondary'
+        elif obj.status == obj.Status.SENDING:
+            css_class = 'badge-primary'
+        elif obj.status == obj.Status.COMPLETED:
+            css_class = 'badge-success'
+
+        return mark_safe(f"<span class='badge badge-pill {css_class}'>{obj.get_status_display().upper()}</span>")

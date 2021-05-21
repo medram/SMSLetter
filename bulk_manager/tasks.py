@@ -14,6 +14,10 @@ def campaign_task(payload):
         c = Campaign.objects.get(pk=campaign_id)
         contacts = []
 
+        # changing Campaign status
+        c.status = c.Status.SENDING
+        c.save()
+
         for l in c.contact_lists.all():
             contacts.extend(l.contacts.all())
 
@@ -27,3 +31,7 @@ def campaign_task(payload):
 
     except Campaign.DoesNotExist:
         print(f'campaign ({campaign_id}) not found.')
+    finally:
+        # changing Campaign status
+        c.status = c.Status.COMPLETED
+        c.save()

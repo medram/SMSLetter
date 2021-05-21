@@ -8,6 +8,12 @@ from sms.models import ContactList, SMS
 
 
 class Campaign(models.Model):
+
+    class Status(models.IntegerChoices):
+        READY = (2, _('Ready'))
+        SENDING = (0, _('Sending'))
+        COMPLETED = (1, _('Completed'))
+
     title = models.CharField(_('Campaign name'), max_length=256, unique=True)
     run_at = Task._meta.get_field('run_at')
     repeat = Task._meta.get_field('repeat')
@@ -22,6 +28,8 @@ class Campaign(models.Model):
 
     messages = models.ManyToManyField(SMS, verbose_name=_(
         'Select SMS'), help_text=_('Select SMS messages to send.'), blank=True)
+
+    status = models.IntegerField(choices=Status.choices, default=Status.READY)
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
