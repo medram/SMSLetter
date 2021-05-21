@@ -27,8 +27,9 @@ class SMSAdmin(admin.ModelAdmin):
 class ContactListAdmin(admin.ModelAdmin):
     list_display = ('list_name', 'get_total_contacts',
                     'created_by', 'updated_by', 'created')
-    list_filter = ('created',)
+    list_filter = ('created', 'created_by')
     exclude = ('created_by',)
+    search_fields = ('id', 'list_name')
     filter_horizontal = ('contacts', 'users')
 
     def has_change_permission(self, req, obj=None):
