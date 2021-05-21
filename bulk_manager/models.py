@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from background_task.models import Task, CompletedTask
 from django_currentuser.db.models import CurrentUserField
 
-from sms.models import ContactList
+from sms.models import ContactList, SMS
 
 
 class Campaign(models.Model):
@@ -19,6 +19,9 @@ class Campaign(models.Model):
 
     contact_lists = models.ManyToManyField(
         ContactList, verbose_name=_('Contact Lists'), blank=True)
+
+    messages = models.ManyToManyField(SMS, verbose_name=_(
+        'Select SMS'), help_text=_('Select SMS messages to send.'), blank=True)
 
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)

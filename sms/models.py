@@ -52,6 +52,9 @@ class SMS(models.Model):
     def __str__(self):
         return f'Message id: #{self.id}'
 
+    def __repr__(self):
+        return f'<SMS {self.pk}>'
+
 
 def get_temp_path(instance, filename):
     return f'tmp/tmp_{filename}'
