@@ -14,7 +14,7 @@
 			{% now 'Y' as YEAR %}
 			{% get_setting "APP_NAME" as APP_NAME %}
 			{% blocktrans trimmed with year=YEAR app_name=APP_NAME %}
-				&copy; {{year}} All right reserved for {{app_name}}.
+				Copyright &copy; {{year}} All right reserved for {{app_name}}.
 			{% endblocktrans %}
 			<form action="{% url 'set_language' %}" method="post">{% csrf_token %}
 			    <input name="next" type="hidden" value="{{ redirect_to }}">
