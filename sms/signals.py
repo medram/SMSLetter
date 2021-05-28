@@ -9,6 +9,6 @@ from .common import send_sms
 @receiver(post_save, sender=Contact)
 def send_sms_message(sender, instance=None, created=False, **kwargs):
     if created and instance.send_sms:
-        user = contact.user
+        user = instance.user
         messages = user.sms_list.all()  # get just the first message.
         send_sms(instance, messages)
