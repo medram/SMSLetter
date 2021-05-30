@@ -18,9 +18,14 @@ class ContactSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context.get('request').user
         validated_data['user'] = user
-        contact = Contact.objects.create(**validated_data)
-        #contact.user.add(user)
-        return contact
+        contacts = Contact.objects.filter(
+            user=user, phone=validated_data['phone'])
+        if not contacts.count():
+            contact = Contact.objects.create(**validated_data)
+            # contact.user.add(user)
+            return contact
+        else:
+            return contacts.all()[0]
 
     class Meta:
         model = Contact
