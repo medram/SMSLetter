@@ -6,4 +6,4 @@ from django.contrib import admin
 
 class MyAdminSite(admin.AdminSite):
     index_title = 'Dashboard'
-    enable_nav_sidebar = False
+    #enable_nav_sidebar = False
