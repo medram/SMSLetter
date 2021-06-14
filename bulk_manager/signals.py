@@ -57,19 +57,19 @@ def update_task(sender, instance, created, **kwargs):
             instance.task.repeat = instance.repeat
             instance.task.repeat_until = instance.repeat_until
             instance.task.save()
-        else:
-            # Create a task
-            task = campaign_task(
-                {
-                    'campaign_id': instance.pk
-                },
-                schedule=instance.run_at,
-                repeat=instance.repeat,
-                verbose_name=instance.title,
-                repeat_until=instance.repeat_until
-            )
-            instance.task = task
-            instance.save()
+        # else:
+        #     # Create a task
+        #     task = campaign_task(
+        #         {
+        #             'campaign_id': instance.pk
+        #         },
+        #         schedule=instance.run_at,
+        #         repeat=instance.repeat,
+        #         verbose_name=instance.title,
+        #         repeat_until=instance.repeat_until
+        #     )
+        #     instance.task = task
+        #     instance.save()
 
 
 # append Task to a taskAdapter
