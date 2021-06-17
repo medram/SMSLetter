@@ -1,0 +1,10 @@
+[
+{
+  "model": "sms.subscription",
+  "pk": 1,
+  "fields": {
+    "total": 1000,
+    "amount": 0
+  }
+}
+]

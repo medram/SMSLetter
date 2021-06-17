@@ -72,7 +72,7 @@
 		<div class="card text-white bg-dark mb-3">
 		  <div class="card-header my-display-4">
 		  	<a href="{% url 'admin:sms_sms_changelist' %}" class="text-white">
-		  		<i class="fas fa-fw fa-sms"></i> SMS
+		  		<i class="fas fa-fw fa-sms"></i> SMS messages
 		  	</a>
 		  </div>
 		  <div class="card-body display-4 text-center">
@@ -111,13 +111,22 @@
 		  <div class="card-body text-right py-3 pl-3 pr-3">
 		    <div class="text-left text-secondary">Total available sms messages that you can use for sending.</div>
 		    <div class="progress">
-		      <div class="progress-bar" role="progressbar" style="width: 73%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">768</div>
+		    	<div class="progress-bar" role="progressbar" style="width: {{ insight.subscription.persentage }}%;" aria-valuenow="{{ insight.subscription.persentage }}" aria-valuemin="0" aria-valuemax="100">{{ insight.subscription.amount }}</div>
 		    </div>
-		    768/1000 sms
+		    {{ insight.subscription.amount }}/{{ insight.subscription.total }} SMS
 		  </div>
 		</div>
 
-
+		<div class="card text-white bg-secondary mb-3">
+		  <div class="card-header my-display-4">
+		  	<a href="#" class="text-white">
+		  		<i class="fas fa-fw fa-question-circle"></i> Contact & Support
+		  	</a>
+		  </div>
+		  <div class="card-body my-3 mx-4">
+		    {{ insight.contact_and_support }}
+		  </div>
+		</div>
 
 <!-- 		<div class="card text-white bg-warning mb-3">
 		  <div class="card-header my-display-4"><i class="fas fa-fw fa-robot"></i> Workers<br></div>

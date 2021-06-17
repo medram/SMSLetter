@@ -94,3 +94,17 @@ class ContactList(models.Model):
     @property
     def is_created(self):
         return False if self.pk else True
+
+
+class ContactUs(models.Model):
+    description = models.CharField(max_length=512, null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
+
+
+class Subscription(models.Model):
+    total = models.IntegerField(default=1000)
+    amount = models.IntegerField(default=0)
+
+    @property
+    def persentage(self):
+        return round(self.amount / self.total * 100, 1)
