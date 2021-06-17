@@ -1,12 +1,14 @@
 from background_task import background
 
 from .models import Campaign
+from sms.models import Subscription
 from sms.common import send_sms
 
 
 @background
 def campaign_task(payload):
     campaign_id = payload.get('campaign_id')
+    subscription = Subscription.objects.first()
 
     print(f'{campaign_id} start sending sms messages...')
 
@@ -25,7 +27,7 @@ def campaign_task(payload):
 
         for contact in contacts:
             try:
-                send_sms(contact, messages)
+                send_sms(contact, messages, subscription)
             except Exception:
                 pass
 
