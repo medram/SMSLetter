@@ -9,12 +9,17 @@ from extra_settings.models import Setting
 from accounts.validators import moroccan_phone
 
 
-def send_sms(contact, messages=None):
+def send_sms(contact, messages=None, subscription=None):
     URL = r'https://bulksms.ma/developer/sms/send'
 
     if hasattr(messages, '__iter__'):
         # sending sms
         for message in messages:
+
+            # check if the user have a valid subscription.
+            if subscription is not None and subscription.amount <= 0:
+                break
+
             params = {
                 'token': Setting.get('BULKSMS_TOKEN', default=''),
                 'tel': contact.phone,
@@ -38,6 +43,9 @@ def send_sms(contact, messages=None):
                 # time.sleep(0.5)
             except Exception as e:
                 print(e)
+            else:
+                subscription.amount -= 1
+                subscription.save()
 
 
 def generate_contact_list(contact_list):
