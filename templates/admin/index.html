@@ -57,6 +57,20 @@
 		  </div>
 		</div>
 
+		<div class="card text-primary bg-light mb-3">
+		  <div class="card-header my-display-4">
+		  	<a href="#">
+		  		<i class="fas fa-fw fa-paper-plane"></i> Subscription
+		  	</a>
+		  </div>
+		  <div class="card-body text-right py-3 pl-3 pr-3">
+		    <div class="text-left text-secondary">Total available sms messages that you can use for sending.</div>
+		    <div class="progress">
+		    	<div class="progress-bar" role="progressbar" style="width: {{ insight.subscription.persentage }}%;" aria-valuenow="{{ insight.subscription.persentage }}" aria-valuemin="0" aria-valuemax="100">{{ insight.subscription.amount }}</div>
+		    </div>
+		    {{ insight.subscription.amount }}/{{ insight.subscription.total }} SMS
+		  </div>
+		</div>
 
 		<div class="card text-white bg-info mb-3">
 		  <div class="card-header my-display-4">
@@ -99,21 +113,6 @@
 		  </div>
 		  <div class="card-body display-4 text-center">
 		    {{ insight.contact_lists }}
-		  </div>
-		</div>
-
-		<div class="card text-primary bg-light mb-3">
-		  <div class="card-header my-display-4">
-		  	<a href="#">
-		  		<i class="fas fa-fw fa-paper-plane"></i> Subscription
-		  	</a>
-		  </div>
-		  <div class="card-body text-right py-3 pl-3 pr-3">
-		    <div class="text-left text-secondary">Total available sms messages that you can use for sending.</div>
-		    <div class="progress">
-		    	<div class="progress-bar" role="progressbar" style="width: {{ insight.subscription.persentage }}%;" aria-valuenow="{{ insight.subscription.persentage }}" aria-valuemin="0" aria-valuemax="100">{{ insight.subscription.amount }}</div>
-		    </div>
-		    {{ insight.subscription.amount }}/{{ insight.subscription.total }} SMS
 		  </div>
 		</div>
 
