@@ -1,8 +1,10 @@
 asgiref==3.3.4
 certifi==2020.12.5
 chardet==4.0.0
+click==7.1.2
 Django==3.2
 django-background-tasks==1.2.5
+django-click==2.2.0
 django-compat==1.0.15
 django-currentuser==0.5.3
 django-extra-settings==0.1.2
