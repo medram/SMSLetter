@@ -1,0 +1,10 @@
+[
+{
+  "model": "sms.contactus",
+  "pk": 1,
+  "fields": {
+    "description": "if you need any help, having questions or upgrade your subscription, please feel free to contact us.",
+    "url": "#"
+  }
+}
+]
