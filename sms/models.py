@@ -46,8 +46,8 @@ class SMS(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'SMS'
-        verbose_name_plural = 'SMS List'
+        verbose_name = 'SMS Message'
+        verbose_name_plural = 'SMS Messages'
 
     def __str__(self):
         return f'Message id: #{self.id}'

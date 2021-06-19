@@ -134,6 +134,13 @@ USE_TZ = True
 DATETIME_FORMAT = 'd/m/Y H:i:s'
 DATE_FORMAT = 'd/m/Y'
 
+####################### My custom settings #######################
+#APP_NAME = ''
+APP_VERSION = '0.0.1-alfa'
+POWRED_BY = 'Mohammed Ramouchy'
+POWRED_BY_URL = 'https://github.com/medram'
+POWRED_BY_EMAIL = 'mohammed@ramouchy.com'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -166,9 +173,9 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-####################### My custom settings #######################
-#APP_NAME = 'idarati'
-APP_VERSION = '0.0.1-alfa'
-POWRED_BY = 'Mohammed Ramouchy'
-POWRED_BY_URL = 'https://github.com/medram'
-POWRED_BY_EMAIL = 'mohammed@ramouchy.com'
+
+####################### SMS API Keys #######################
+BULKSMS_TOKEN = ''
+
+VONAGE_KEY = '093d8276'
+VONAGE_SECRET = 'CLM5uCwanOr8wspq'

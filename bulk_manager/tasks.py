@@ -10,7 +10,7 @@ def campaign_task(payload):
     campaign_id = payload.get('campaign_id')
     subscription = Subscription.objects.first()
 
-    print(f'{campaign_id} start sending sms messages...')
+    print(f'Campaign {campaign_id} started...')
 
     try:
         c = Campaign.objects.get(pk=campaign_id)
@@ -28,8 +28,8 @@ def campaign_task(payload):
         for contact in contacts:
             try:
                 send_sms(contact, messages, subscription)
-            except Exception:
-                pass
+            except Exception as e:
+                print(e)
 
     except Campaign.DoesNotExist:
         print(f'campaign ({campaign_id}) not found.')

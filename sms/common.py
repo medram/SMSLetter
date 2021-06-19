@@ -1,16 +1,18 @@
+import re
 import csv
 #import time
 import requests
 
+import vonage
+
 from django.core.exceptions import ValidationError
 from django_currentuser.middleware import get_current_user
-from extra_settings.models import Setting
 
 from accounts.validators import moroccan_phone
+from app import settings
 
 
 def send_sms(contact, messages=None, subscription=None):
-    URL = r'https://bulksms.ma/developer/sms/send'
 
     if hasattr(messages, '__iter__'):
         # sending sms
@@ -20,32 +22,76 @@ def send_sms(contact, messages=None, subscription=None):
             if subscription is not None and subscription.amount <= 0:
                 break
 
-            params = {
-                'token': Setting.get('BULKSMS_TOKEN', default=''),
-                'tel': contact.phone,
-                'message': message.message
-            }
-            if message.title:
-                params.setdefault('title', message.title)
-
-            if message.alias:
-                params.setdefault('shortcode', message.alias)
-
-            if message.attachement:
-                params.setdefault('attachement', message.attachement)
-
             # print(params)
             try:
-                req = requests.get(URL, params=params)
+                status = False
+                if settings.VONAGE_KEY:
+                    status = send_via_api_1(contact, message)
+                elif settings.BULKSMS_TOKEN:
+                    status = send_via_api_2(contact, message)
 
-                print('Message sent.')
-                print(req.json())
                 # time.sleep(0.5)
+                if status:
+                    print('SMS sent successfully.')
+                    subscription.amount -= 1
+                    subscription.save()
             except Exception as e:
                 print(e)
-            else:
-                subscription.amount -= 1
-                subscription.save()
+
+
+def phone_to_global_format(phone):
+    return re.sub(r'^0', '212', phone)
+
+
+def send_via_api_1(contact, message):
+    client = vonage.Client(key=settings.VONAGE_KEY,
+                           secret=settings.VONAGE_SECRET)
+    sms = vonage.Sms(client)
+
+    title = message.title if message.title else '-'
+
+    responseData = sms.send_message({
+        "from": title,
+        "to": phone_to_global_format(contact.phone),
+        "text": message.message,
+    })
+
+    # print(responseData)
+
+    if responseData["messages"][0]["status"] == "0":
+        return True
+    return False
+
+
+def send_via_api_2(contact, message):
+    URL = r'https://bulksms.ma/developer/sms/send'
+
+    params = {
+        'token': settings.BULKSMS_TOKEN,
+        'tel': phone_to_global_format(contact.phone),
+        'message': message.message
+    }
+    if message.title:
+        params.setdefault('title', message.title)
+
+    if message.alias:
+        params.setdefault('shortcode', message.alias)
+
+    if message.attachement:
+        params.setdefault('attachement', message.attachement)
+
+    # print(params)
+    try:
+        req = requests.get(URL, params=params)
+
+        # print('Message sent.')
+        data = req.json()
+        if data.get('success') == 1:
+            return True
+        return False
+        # time.sleep(0.5)
+    except Exception as e:
+        return False
 
 
 def generate_contact_list(contact_list):
