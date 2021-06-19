@@ -48,7 +48,7 @@ def send_via_api_1(contact, message):
                            secret=settings.VONAGE_SECRET)
     sms = vonage.Sms(client)
 
-    title = message.title if message.title else '-'
+    title = message.title if message.title else 'SMS'
 
     responseData = sms.send_message({
         "from": title,

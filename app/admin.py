@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
-from sms.models import Contact, ContactList, SMS, ContactUs, Subscription
+from sms.models import Contact, ContactList, SMS, Subscription
 from bulk_manager.models import Campaign
+from . import settings
 
 User = get_user_model()
 
@@ -15,7 +16,6 @@ class MyAdminSite(admin.AdminSite):
             extra_context = {}
 
         subscription = Subscription.objects.first()
-        contact_us = ContactUs.objects.first()
 
         # Adding my context here
         extra_context.update({
@@ -26,7 +26,10 @@ class MyAdminSite(admin.AdminSite):
                 'sms': SMS.objects.count(),
                 'campaigns': Campaign.objects.count(),
                 'subscription': subscription,
-                'contact_us': contact_us,
+                'contact_us': {
+                    'description': settings.CONTACT_US_AND_SUPPORT_DESCRIPTION,
+                    'url': settings.CONTACT_US_AND_SUPPORT_URL
+                },
             }
         })
 

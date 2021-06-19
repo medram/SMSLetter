@@ -173,7 +173,12 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-####################### Footer #######################
+####################### Contact & Support & Footer #######################
+CONTACT_US_AND_SUPPORT_DESCRIPTION = """
+if you need any help, having questions or upgrade your subscription, please feel free to contact us.
+"""
+CONTACT_US_AND_SUPPORT_URL = "#"
+
 FOOTER = """<a href="#">Contact us</a> |
 <a href="#">FAQ</a> |
 <a href="#">Privacy policy</a> |
