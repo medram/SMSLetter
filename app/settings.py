@@ -173,6 +173,12 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+####################### Footer #######################
+FOOTER = """<a href="#">Contact us</a> |
+<a href="#">FAQ</a> |
+<a href="#">Privacy policy</a> |
+<a href="#">Terms of use</a>
+"""
 
 ####################### SMS API Keys #######################
 BULKSMS_TOKEN = ''
