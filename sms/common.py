@@ -24,10 +24,11 @@ def send_sms(contact, messages=None, subscription=None, campaign=None):
                 break
 
             # stop campaign
-            campaign.reload()
-            if campaign is not None and campaign.status == campaign.Status.STOPPED:
-                # print('stopped')
-                raise StoppedCampaign()
+            if campaign is not None:
+                campaign.reload()
+                if campaign.status == campaign.Status.STOPPED:
+                    # print('stopped')
+                    raise StoppedCampaign()
 
             # print(params)
             try:
