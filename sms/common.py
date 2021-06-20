@@ -41,7 +41,7 @@ def send_sms(contact, messages=None, subscription=None, campaign=None):
                     print('SMS sent successfully.')
                     subscription.amount -= 1
                     subscription.save()
-                time.sleep(5)
+                # time.sleep(5)
             except Exception as e:
                 print(e)
 
