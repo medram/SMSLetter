@@ -10,9 +10,10 @@ from sms.models import ContactList, SMS
 class Campaign(models.Model):
 
     class Status(models.IntegerChoices):
-        READY = (2, _('Ready'))
         SENDING = (0, _('Sending'))
         COMPLETED = (1, _('Completed'))
+        READY = (2, _('Ready'))
+        STOPPED = (3, _('Stopped'))
 
     title = models.CharField(_('Campaign name'), max_length=256, unique=True)
     run_at = Task._meta.get_field('run_at')
@@ -52,3 +53,7 @@ class Campaign(models.Model):
     @admin.display(description=_('Updated By'))
     def updated_by_profile(self):
         return self.updated_by.profile_with_info(size=32)
+
+    def reload(self):
+        new_obj = self.__class__.objects.get(pk=self.pk)
+        self.__dict__.update(new_obj.__dict__)

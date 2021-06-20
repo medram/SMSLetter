@@ -1,0 +1,3 @@
+
+class StoppedCampaign(Exception):
+    pass

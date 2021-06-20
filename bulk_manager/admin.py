@@ -28,6 +28,7 @@ class CampaignAdmin(admin.ModelAdmin):
     search_fields = ('id', 'title')
     date_hierarchy = 'created'
     radio_fields = {'repeat': admin.VERTICAL}
+    actions = ('stop_campaign',)
 
     def total_messages(self, obj=None):
         return obj.messages.count()
@@ -43,5 +44,15 @@ class CampaignAdmin(admin.ModelAdmin):
             css_class = 'badge-primary'
         elif obj.status == obj.Status.COMPLETED:
             css_class = 'badge-success'
+        elif obj.status == obj.Status.STOPPED:
+            css_class = 'badge-warning'
 
         return mark_safe(f"<span class='badge badge-pill {css_class}'>{obj.get_status_display().upper()}</span>")
+
+    def stop_campaign(self, request, queryset):
+        for campaign in queryset.all():
+            if campaign.status != Campaign.Status.COMPLETED:
+                campaign.status = Campaign.Status.STOPPED
+                campaign.save()
+        self.message_user(request, _('Stopped successfully.'))
+    stop_campaign.short_description = _('Stop campaign')

@@ -1,6 +1,6 @@
 import re
 import csv
-#import time
+import time
 import requests
 
 import vonage
@@ -9,10 +9,11 @@ from django.core.exceptions import ValidationError
 from django_currentuser.middleware import get_current_user
 
 from accounts.validators import moroccan_phone
+from bulk_manager.exceptions import StoppedCampaign
 from app import settings
 
 
-def send_sms(contact, messages=None, subscription=None):
+def send_sms(contact, messages=None, subscription=None, campaign=None):
 
     if hasattr(messages, '__iter__'):
         # sending sms
@@ -22,6 +23,12 @@ def send_sms(contact, messages=None, subscription=None):
             if subscription is not None and subscription.amount <= 0:
                 break
 
+            # stop campaign
+            campaign.reload()
+            if campaign is not None and campaign.status == campaign.Status.STOPPED:
+                # print('stopped')
+                raise StoppedCampaign()
+
             # print(params)
             try:
                 status = False
@@ -30,11 +37,11 @@ def send_sms(contact, messages=None, subscription=None):
                 elif settings.BULKSMS_TOKEN:
                     status = send_via_api_2(contact, message)
 
-                # time.sleep(0.5)
                 if status:
                     print('SMS sent successfully.')
                     subscription.amount -= 1
                     subscription.save()
+                time.sleep(5)
             except Exception as e:
                 print(e)
 
