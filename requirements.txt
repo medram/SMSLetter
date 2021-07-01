@@ -12,6 +12,7 @@ django-compat==1.0.15
 django-currentuser==0.5.3
 django-extra-settings==0.1.2
 djangorestframework==3.12.4
+gunicorn==20.1.0
 idna==2.10
 Pillow==8.2.0
 pycparser==2.20

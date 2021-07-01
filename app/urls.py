@@ -7,10 +7,17 @@ from . import views
 
 app_name = __package__
 
+sub_dir = f'{settings.SUB_DIR}/' if settings.SUB_DIR else ''
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
+    path('superman/api/', include('api.urls')),
     path('', views.home)
+]
+
+# cabsulate everything in a subdirectery
+urlpatterns = [
+    path(sub_dir, include(urlpatterns))
 ]
 
 # appending static and media files

@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# without slashes
+SUB_DIR = ''
 
 # Application definition
 
@@ -136,7 +138,7 @@ DATE_FORMAT = 'd/m/Y'
 
 ####################### My custom settings #######################
 #APP_NAME = ''
-APP_VERSION = '0.0.1-alfa'
+APP_VERSION = '1.0.0'
 POWRED_BY = 'Mohammed Ramouchy'
 POWRED_BY_URL = 'https://github.com/medram'
 POWRED_BY_EMAIL = 'mohammed@ramouchy.com'
@@ -144,13 +146,13 @@ POWRED_BY_EMAIL = 'mohammed@ramouchy.com'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = f'/{SUB_DIR}/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'app/static')
 ]
 
-MEDIA_URL = '/media/'
+MEDIA_URL = f'/{SUB_DIR}/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
@@ -188,5 +190,5 @@ FOOTER = """<a href="#">Contact us</a> |
 ####################### SMS API Keys #######################
 BULKSMS_TOKEN = ''
 
-VONAGE_KEY = '093d8276'
-VONAGE_SECRET = 'CLM5uCwanOr8wspq'
+VONAGE_KEY = ''
+VONAGE_SECRET = ''
