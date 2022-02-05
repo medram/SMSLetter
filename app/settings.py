@@ -138,7 +138,7 @@ DATE_FORMAT = 'd/m/Y'
 
 ####################### My custom settings #######################
 #APP_NAME = ''
-APP_VERSION = '1.0.0'
+APP_VERSION = '1.0.1'
 POWRED_BY = 'Mohammed Ramouchy'
 POWRED_BY_URL = 'https://github.com/medram'
 POWRED_BY_EMAIL = 'mohammed@ramouchy.com'
@@ -146,13 +146,13 @@ POWRED_BY_EMAIL = 'mohammed@ramouchy.com'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = f'/{SUB_DIR}/static/'
+STATIC_URL = f'{SUB_DIR}/static/' if SUB_DIR else "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'app/static')
 ]
 
-MEDIA_URL = f'/{SUB_DIR}/media/'
+MEDIA_URL = f'{SUB_DIR}/media/' if SUB_DIR else "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
