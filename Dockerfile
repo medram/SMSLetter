@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Updating system packages
 RUN apt-get update && apt-get upgrade -y \
-	&& apt-get install curl -y \
+	&& apt-get install curl nano -y \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*
 
@@ -33,9 +33,14 @@ RUN find . -type d -exec chmod 775 {} \; \
 # Default port
 ENV PORT=80
 
-VOLUME ["/app"]
+VOLUME ["/data"]
 EXPOSE ${PORT}
 
 HEALTHCHECK --interval=15s --timeout=14s --start-period=5s CMD curl -fsSLI http://127.0.0.1:${PORT} | grep -q "200 OK" || false
+
+# Setting up "/data" folder
+USER root
+RUN mkdir -p /data && chown -R ${USER}:${USER} /data
+USER ${USER}
 
 CMD gunicorn --bind 0.0.0.0:${PORT} -w ${WORKERS} app.wsgi

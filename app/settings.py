@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': '/data/db.sqlite3',
     }
 }
 
@@ -138,7 +138,7 @@ DATE_FORMAT = 'd/m/Y'
 
 ####################### My custom settings #######################
 #APP_NAME = ''
-APP_VERSION = '1.0.1'
+APP_VERSION = '1.0.2'
 POWRED_BY = 'Mohammed Ramouchy'
 POWRED_BY_URL = 'https://github.com/medram'
 POWRED_BY_EMAIL = 'mohammed@ramouchy.com'
